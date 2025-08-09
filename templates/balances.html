@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Balance Summary</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            padding: 40px;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+
+        .balance-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .balance-item {
+            background: #ffffff;
+            padding: 18px 20px;
+            margin-bottom: 15px;
+            border-left: 6px solid #3498db;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .balance-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .balance-item div:first-child {
+            font-size: 18px;
+            color: #34495e;
+        }
+
+        .amount {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .settle-btn {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .settle-btn a {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+            margin: 0 10px;
+            display: inline-block;
+        }
+
+        .settle-btn a:hover {
+            background: #45a049;
+        }
+
+        .settle-btn a.back-btn {
+            background-color: #3498db;
+        }
+
+        .settle-btn a.back-btn:hover {
+            background-color: #2980b9;
+        }
+
+        p {
+            text-align: center;
+            font-size: 18px;
+            color: #888;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Balance Summary</h1>
+    <div class="balance-container">
+        {% if balances %}
+            {% for from_name, to_name, amount in balances %}
+                <div class="balance-item">
+                    <div><i class="fas fa-arrow-right"></i> {{ from_name }} owes {{ to_name }}</div>
+                    <div class="amount">₹{{ amount }}</div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align: center;">No balances to show.</p>
+        {% endif %}
+    </div>
+
+    <div class="settle-btn">
+        <a href="{{ url_for('settle_up') }}"><i class="fas fa-handshake"></i> Settle Up</a>
+        <a href="{{ url_for('group') }}" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Group</a>
+    </div>
+</body>
+</html>
